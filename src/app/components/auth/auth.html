@@ -1,0 +1,98 @@
+<div class="auth-page">
+
+  <div class="container" [class.right-panel-active]="isSignUpActive">
+
+    <!-- FORMULARIO REGISTRO -->
+    <div class="form-container sign-up-container">
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+
+        <h1>Crear cuenta</h1>
+        <p class="subtitle">Únete y encuentra tu mesa ideal</p>
+
+        <div class="input-icon">
+            <i class="fas fa-user"></i>
+            <input type="text" formControlName="username" placeholder="Nombre de usuario">
+    </div>
+
+        <div class="input-icon">
+          <i class="fas fa-envelope"></i>
+          <input type="email" formControlName="email" placeholder="Email" autocomplete="username">
+        </div>
+
+        <div class="input-icon">
+          <i class="fas fa-lock"></i>
+          <input type="password" formControlName="password" placeholder="Contraseña" autocomplete="new-password">
+        </div>
+
+        <button type="submit" class="submit-btn" [disabled]="loadingRegister">
+          {{ loadingRegister ? 'Creando cuenta...' : 'Registrarme' }}
+        </button>
+
+        <p *ngIf="registerError" class="error">{{ registerError }}</p>
+        <p *ngIf="registerSuccess" class="success">{{ registerSuccess }}</p>
+
+      </form>
+    </div>
+
+    <!-- FORMULARIO LOGIN -->
+    <div class="form-container sign-in-container">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+        <h1>Iniciar Sesión</h1>
+        <p class="subtitle">Ingresa tus datos para continuar</p>
+
+        <div class="input-icon">
+          <i class="fas fa-envelope"></i>
+          <input type="email" formControlName="email" placeholder="Email" autocomplete="username">
+        </div>
+
+        <div class="input-icon">
+          <i class="fas fa-lock"></i>
+          <input type="password" formControlName="password" placeholder="Contraseña" autocomplete="current-password">
+        </div>
+
+        <div class="forgot-wrapper">
+          <span class="forgot-link">¿Olvidaste tu contraseña?</span>
+        </div>
+
+        <button type="submit" class="submit-btn" [disabled]="loadingLogin">
+          {{ loadingLogin ? 'Ingresando...' : 'Ingresar' }}
+        </button>
+
+        <p *ngIf="loginError" class="error">{{ loginError }}</p>
+
+      </form>
+    </div>
+
+    <!-- OVERLAY DESLIZANTE -->
+    <div class="overlay-container">
+      <div class="overlay">
+
+        <div class="overlay-panel overlay-left">
+          <div class="logo">
+            <img src="/logo.jpeg" alt="Centro Home">
+          </div>
+          <h2>¡Bienvenido de nuevo!</h2>
+          <p>Para seguir conectado, inicia sesión con tus datos</p>
+          <button type="button" class="ghost-btn" (click)="showSignIn()">
+            Iniciar Sesión
+          </button>
+        </div>
+
+        <div class="overlay-panel overlay-right">
+          <div class="logo">
+            <img src="/logo.jpeg" alt="Centro Home">
+          </div>
+          <h2>¡Hola!</h2>
+          <p>Regístrate y encuentra la mesa de centro perfecta para tu sala</p>
+          <button type="button" class="ghost-btn" (click)="showSignUp()">
+            Registrarme
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

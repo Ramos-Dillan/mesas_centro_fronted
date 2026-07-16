@@ -1,0 +1,174 @@
+<div class="catalogo-page">
+  <div class="page-header">
+    <div>
+      <span class="eyebrow">Catálogo</span>
+      <h1>Mesas disponibles</h1>
+      <p>
+        Explora las mesas con una distribución más compacta y uniforme para ver más productos en pantalla.
+      </p>
+    </div>
+
+    <button class="add-btn" (click)="showForm ? cancelEdit() : toggleForm()">
+      {{ showForm ? 'Cerrar formulario' : 'Agregar mesa' }}
+    </button>
+  </div>
+
+  <div class="create-panel" *ngIf="showForm">
+    <h2 class="panel-title">{{ isEditing ? 'Editar mesa' : 'Nueva mesa' }}</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" formControlName="name" placeholder="Ej: Mesa Eilium">
+        </div>
+
+        <div class="field">
+          <label>Estilo</label>
+          <input type="text" formControlName="style" placeholder="Ej: Moderna">
+        </div>
+
+        <div class="field">
+          <label>Material</label>
+          <input type="text" formControlName="material" placeholder="Ej: MDF">
+        </div>
+
+        <div class="field">
+          <label>Color</label>
+          <input type="text" formControlName="color" placeholder="Ej: Blanco, Negro">
+        </div>
+
+        <div class="field">
+          <label>Forma</label>
+          <input type="text" formControlName="shape" placeholder="Ej: Cuadrada / Redonda">
+        </div>
+
+        <div class="field">
+          <label>Precio</label>
+          <input type="number" formControlName="price" placeholder="Ej: 128000">
+        </div>
+
+        <div class="field" [class.full]="isRoundShape">
+          <label>Imagen {{ isEditing ? '(opcional, deja igual si no cambias)' : '' }}</label>
+          <label class="file-drop" [class.has-preview]="previewUrl">
+            <input type="file" accept="image/*" hidden (change)="onFileSelected($event)">
+            <ng-container *ngIf="!previewUrl">
+              <i class="fa-regular fa-image"></i>
+              <span>Sube una imagen</span>
+            </ng-container>
+            <img *ngIf="previewUrl" [src]="previewUrl" alt="Vista previa">
+          </label>
+        </div>
+
+        <div class="field" *ngIf="!isRoundShape">
+          <label>Ancho</label>
+          <input type="text" formControlName="width" placeholder="Ej: 50">
+        </div>
+
+        <div class="field" *ngIf="!isRoundShape">
+          <label>Profundidad</label>
+          <input type="text" formControlName="depth" placeholder="Ej: 50">
+        </div>
+
+        <div class="field" *ngIf="!isRoundShape">
+          <label>Alto</label>
+          <input type="text" formControlName="height" placeholder="Ej: 43">
+        </div>
+
+        <div class="field" *ngIf="isRoundShape">
+          <label>Diámetro</label>
+          <input type="text" formControlName="diameter" placeholder="Ej: 80">
+        </div>
+
+        <div class="field full">
+          <label>Descripción</label>
+          <textarea formControlName="description" rows="4" placeholder="Describe la mesa"></textarea>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <p class="error" *ngIf="saveError">{{ saveError }}</p>
+        <p class="success" *ngIf="saveSuccess">{{ isEditing ? '✅ Mesa actualizada correctamente.' : '✅ Mesa creada correctamente.' }}</p>
+
+        <button type="button" class="cancel-btn" (click)="cancelEdit()" *ngIf="isEditing">
+          Cancelar
+        </button>
+
+        <button class="submit-btn" type="submit" [disabled]="saving">
+          {{ saving ? 'Guardando...' : (isEditing ? 'Actualizar mesa' : 'Guardar mesa') }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="loading" class="state-message">
+    Cargando catálogo...
+  </div>
+
+  <div *ngIf="error" class="state-message error">
+    {{ error }}
+  </div>
+
+  <p class="error" *ngIf="deleteError">{{ deleteError }}</p>
+
+  <div class="grid" *ngIf="!loading && !error">
+    <div class="card" *ngFor="let table of tables">
+      <div class="image-container">
+        <img [src]="getImageUrl(table.image_url)" [alt]="table.name">
+        <span class="status-badge" [class.inactive]="!table.is_active">
+          {{ table.is_active ? 'Disponible' : 'No disponible' }}
+        </span>
+      </div>
+
+      <div class="card-body">
+        <div class="card-top">
+          <h3>{{ table.name }}</h3>
+        </div>
+
+        <div class="tags">
+          <span *ngIf="table.shape">{{ table.shape }}</span>
+          <span *ngIf="table.style">{{ table.style }}</span>
+          <span *ngIf="table.material">{{ table.material }}</span>
+        </div>
+
+        <div class="info">
+          <div class="info-item">
+            <strong>Color</strong>
+            <span>{{ table.color }}</span>
+          </div>
+
+          <div class="info-item" *ngIf="isRoundTable(table) && table.diameter">
+            <strong>Diámetro</strong>
+            <span>Ø {{ table.diameter }} cm</span>
+          </div>
+
+          <div class="info-item" *ngIf="!isRoundTable(table) && table.width">
+            <strong>Medidas</strong>
+            <span>
+              {{ table.width }} × {{ table.depth }} × {{ table.height }} cm
+            </span>
+          </div>
+        </div>
+
+        <div class="price-row">
+          <span class="price">
+            ${{ table.price | number:'1.0-0' }}
+          </span>
+        </div>
+
+        <div class="card-actions">
+          <button class="edit-btn" type="button" (click)="editTable(table)">
+            Editar
+          </button>
+          <button
+            class="delete-btn"
+            type="button"
+            [disabled]="deletingId === table.id"
+            (click)="deleteTable(table)">
+            {{ deletingId === table.id ? 'Eliminando...' : 'Eliminar' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

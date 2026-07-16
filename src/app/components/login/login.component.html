@@ -1,0 +1,79 @@
+<div class="auth-wrapper">
+  <div class="auth-card">
+
+    <!-- PANEL IZQUIERDO: FORMULARIO -->
+    <div class="form-panel">
+      <div class="form-panel-inner">
+        <h1>Iniciar Sesión</h1>
+        <p class="subtitle">Ingresa tus datos para continuar</p>
+
+        <div class="social-buttons">
+          <button type="button" class="social-btn" aria-label="Google">
+            <i class="fab fa-google"></i>
+          </button>
+          <button type="button" class="social-btn" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </button>
+        </div>
+
+        <div class="separator">
+          <span>o usa tu cuenta</span>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="input-icon">
+            <i class="fas fa-envelope"></i>
+            <input
+              type="email"
+              formControlName="email"
+              placeholder="Email"
+              autocomplete="username"
+            >
+          </div>
+
+          <div class="input-icon">
+            <i class="fas fa-lock"></i>
+            <input
+              type="password"
+              formControlName="password"
+              placeholder="Contraseña"
+              autocomplete="current-password"
+            >
+          </div>
+
+          <div class="forgot-wrapper">
+            <span class="forgot-link">¿Olvidaste tu contraseña?</span>
+          </div>
+
+          <button type="submit" class="submit-btn" [disabled]="loading">
+            {{ loading ? 'Ingresando...' : 'Ingresar' }}
+          </button>
+
+          <p *ngIf="errorMsg" class="error">
+            {{ errorMsg }}
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <!-- PANEL DERECHO: BIENVENIDA -->
+    <div class="welcome-panel">
+      <div class="welcome-panel-inner">
+        <div class="logo">
+          <img src="/logo.jpeg" alt="Centro Home">
+        </div>
+
+        <h2>¡Hola de nuevo!</h2>
+        <p>
+          Encuentra la mesa de centro perfecta para tu sala
+          con recomendaciones hechas a tu medida.
+        </p>
+
+        <a routerLink="/register" class="ghost-btn">
+          Regístrate
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>

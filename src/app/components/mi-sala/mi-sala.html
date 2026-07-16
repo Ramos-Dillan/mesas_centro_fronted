@@ -1,0 +1,150 @@
+<div class="mi-sala">
+
+  <div class="chat-page-wrap">
+    <div class="chat-panel">
+
+      <div class="chat-header">
+        <div class="avatar-wrap">
+          <div class="chat-avatar">🛋️</div>
+          <span class="online-dot"></span>
+        </div>
+
+        <div class="chat-header-text">
+          <h3>{{ botName }} <span class="ai-badge">IA</span></h3>
+          <span><i class="fas fa-circle status-icon"></i> En línea · Asistente Centro Home</span>
+        </div>
+
+        <button
+          class="menu-btn"
+          (click)="backToMenu()"
+          *ngIf="!isMenu"
+          title="Volver al menú de opciones"
+        >
+          <i class="fas fa-house"></i> Menú
+        </button>
+      </div>
+
+      <div class="chat-body" #chatBody>
+
+        <div
+          class="chat-row"
+          *ngFor="let msg of chatMessages"
+          [class.user]="msg.role === 'user'"
+        >
+          <div class="chat-avatar-sm" *ngIf="msg.role !== 'user'">🛋️</div>
+
+          <div class="chat-bubble" [class.user]="msg.role === 'user'">
+            <p>{{ msg.content }}</p>
+            <img
+              *ngIf="msg.generated_image"
+              [src]="getImageUrl(msg.generated_image)"
+              alt="Recomendación generada"
+              class="chat-image"
+            >
+          </div>
+        </div>
+
+        <div class="chat-row" *ngIf="isMenu && !chatLoading">
+          <div class="chat-avatar-sm">🛋️</div>
+          <div class="chat-options">
+            <button class="chip-btn" (click)="goToRecommendation()">📷 Quiero una recomendación</button>
+            <button class="chip-btn" (click)="askQuestion()">💬 Tengo una pregunta</button>
+          </div>
+        </div>
+
+        <div class="chat-row" *ngIf="chatLoading">
+          <div class="chat-avatar-sm">🛋️</div>
+          <div class="chat-bubble typing">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="upload-panel-inline" *ngIf="isUpload && !result">
+
+        <div class="upload-panel-header">
+          <p class="upload-panel-title"><i class="fas fa-camera"></i> Sube la foto de tu sala</p>
+          <button class="back-link" (click)="backToMenu()">
+            <i class="fas fa-arrow-left"></i> Volver
+          </button>
+        </div>
+
+        <label class="dropzone" [class.has-preview]="previewUrl">
+          <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden>
+
+          <ng-container *ngIf="!previewUrl">
+            <i class="fas fa-camera"></i>
+            <span>Haz clic para subir una foto</span>
+            <small>PNG, JPG o WEBP</small>
+          </ng-container>
+
+          <img *ngIf="previewUrl" [src]="previewUrl" alt="Vista previa">
+        </label>
+
+        <button class="submit-btn" (click)="onSubmit()" [disabled]="loading || !selectedFile">
+          <span *ngIf="loading" class="spinner"></span>
+          {{ loading ? 'Analizando tu sala...' : 'Generar recomendación' }}
+        </button>
+
+        <p *ngIf="error" class="error">{{ error }}</p>
+
+      </div>
+
+      <div class="chat-input-row">
+        <input
+          #chatInputRef
+          type="text"
+          placeholder="Escribe tu mensaje..."
+          [(ngModel)]="chatInput"
+          (keyup.enter)="sendChatMessage()"
+          [disabled]="chatLoading"
+        >
+        <button
+          class="send-btn"
+          (click)="sendChatMessage()"
+          [disabled]="chatLoading || !chatInput.trim()"
+        >
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="result-panel" *ngIf="result">
+
+    <div class="result-grid">
+
+      <div class="result-image">
+        <img
+          *ngIf="result.generated_image"
+          [src]="getImageUrl(result.generated_image)"
+          alt="Recomendación generada"
+        >
+        <div *ngIf="!result.generated_image" class="no-image">
+          <i class="fas fa-image"></i>
+          <span>La imagen compuesta no pudo generarse esta vez</span>
+        </div>
+      </div>
+
+      <div class="result-info">
+        <span class="score-badge">{{ result.score }}% de compatibilidad</span>
+        <h2>{{ result.table }}</h2>
+        <p>{{ result.explanation }}</p>
+
+        <div class="result-actions">
+          <button class="ghost-btn" (click)="reset()">
+            Probar con otra foto
+          </button>
+          <button class="ghost-btn secondary" (click)="focusChatInput()">
+            Preguntar sobre esta mesa
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

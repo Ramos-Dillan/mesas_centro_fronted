@@ -1,0 +1,19 @@
+<nav class="navbar">
+
+  <div class="nav-brand" routerLink="/home">
+    <img src="/logo.jpeg" alt="Centro Home">
+    <span>Centro Home</span>
+  </div>
+
+  <div class="nav-links">
+    <a routerLink="/home" routerLinkActive="active">Inicio</a>
+    <a routerLink="/mi-sala" routerLinkActive="active">Mi Sala</a>
+    <a routerLink="/catalogo" routerLinkActive="active">Catálogo</a>
+  </div>
+
+  <div class="nav-user">
+    <span class="username">{{ username }}</span>
+    <button class="logout-btn" (click)="logout()">Salir</button>
+  </div>
+
+</nav>
