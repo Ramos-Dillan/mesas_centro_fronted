@@ -72,7 +72,7 @@ export class Auth {
 
     try {
       await firstValueFrom(
-        this.authService.login(email, password).pipe(timeout(5000))
+        this.authService.login(email, password).pipe(timeout(30000))
       );
       this.router.navigateByUrl('/home');
     } catch (err: any) {
@@ -110,7 +110,7 @@ export class Auth {
 
   try {
     await firstValueFrom(
-      this.authService.register(username, email, password).pipe(timeout(5000))
+      this.authService.register(username, email, password).pipe(timeout(30000))
     );
 
     this.registerSuccess = '✅ Cuenta creada. Ahora inicia sesión.';
