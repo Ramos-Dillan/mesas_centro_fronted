@@ -2,6 +2,11 @@
 
   <div class="container" [class.right-panel-active]="isSignUpActive">
 
+    <!-- LOGO MOBILE (solo visible en pantallas chicas) -->
+    <div class="mobile-logo">
+      <img src="/logo.jpeg" alt="Centro Home">
+    </div>
+
     <!-- FORMULARIO REGISTRO -->
     <div class="form-container sign-up-container">
       <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
@@ -30,6 +35,10 @@
 
         <p *ngIf="registerError" class="error">{{ registerError }}</p>
         <p *ngIf="registerSuccess" class="success">{{ registerSuccess }}</p>
+
+        <p class="switch-mobile">
+          ¿Ya tienes cuenta? <span (click)="showSignIn()">Inicia sesión</span>
+        </p>
 
       </form>
     </div>
@@ -61,10 +70,14 @@
 
         <p *ngIf="loginError" class="error">{{ loginError }}</p>
 
+        <p class="switch-mobile">
+          ¿No tienes cuenta? <span (click)="showSignUp()">Regístrate</span>
+        </p>
+
       </form>
     </div>
 
-    <!-- OVERLAY DESLIZANTE -->
+    <!-- OVERLAY DESLIZANTE (solo desktop) -->
     <div class="overlay-container">
       <div class="overlay">
 
