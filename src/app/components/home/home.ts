@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TableService } from '../../service/table.service';
 import { TableItem } from '../../models/table.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -46,7 +47,7 @@ export class Home implements OnInit {
   getImageUrl(path: string): string {
     if (!path) return 'assets/placeholder.png';
     if (path.startsWith('http://') || path.startsWith('https://')) return path;
-    return `http://localhost:5000/${path.replace(/^\/+/, '').replace(/\\/g, '/')}`;
+    return `${environment.apiUrl}/${path.replace(/^\/+/, '').replace(/\\/g, '/')}`;
   }
 
   goToUpload(): void {

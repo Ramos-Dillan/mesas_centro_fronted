@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class AiService {
 
-  private baseUrl = 'http://localhost:5000/ai';
+  private baseUrl = 'https://mesas-centro-backend.onrender.com/ai';
 
   constructor(
     private http: HttpClient,

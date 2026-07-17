@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TableService } from '../../service/table.service';
 import { TableItem } from '../../models/table.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-catalogo',
@@ -78,7 +79,7 @@ export class Catalogo implements OnInit {
   getImageUrl(path: string): string {
     if (!path) return 'assets/placeholder.png';
     if (path.startsWith('http://') || path.startsWith('https://')) return path;
-    return `http://localhost:5000/${path.replace(/^\/+/, '')}`;
+    return `${environment.apiUrl}/${path.replace(/^\/+/, '').replace(/\\/g, '/')}`;
   }
 
   toggleForm(): void {

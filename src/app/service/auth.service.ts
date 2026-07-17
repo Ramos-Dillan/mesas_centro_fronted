@@ -8,7 +8,7 @@ import { LoginResponse, RegisterResponse, User } from '../models/user.model';
 })
 export class AuthService {
 
-  private baseUrl = 'http://localhost:5000/auth';
+  private baseUrl = 'https://mesas-centro-backend.onrender.com/auth';
 
   constructor(private http: HttpClient) {}
 

@@ -7,7 +7,7 @@ import { TableItem } from '../models/table.model';
   providedIn: 'root'
 })
 export class TableService {
-  private baseUrl = 'http://localhost:5000/tables';
+  private baseUrl = 'https://mesas-centro-backend.onrender.com/tables';
 
   constructor(private http: HttpClient) {}
 
