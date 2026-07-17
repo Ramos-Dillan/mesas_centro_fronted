@@ -16,12 +16,16 @@
     <button class="logout-btn" (click)="logout()">Salir</button>
   </div>
 
-  <!-- BOTÓN HAMBURGUESA (solo mobile) -->
-  <button class="burger-btn" (click)="isMenuOpen = !isMenuOpen" [class.active]="isMenuOpen" aria-label="Abrir menú">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+  <!-- MOBILE: Salir + botón hamburguesa juntos en la esquina -->
+  <div class="mobile-actions">
+    <button class="logout-btn logout-btn-mobile" (click)="logout()">Salir</button>
+
+    <button class="burger-btn" (click)="isMenuOpen = !isMenuOpen" [class.active]="isMenuOpen" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
 
   <!-- MENÚ MOBILE DESPLEGABLE -->
   <div class="mobile-menu" [class.open]="isMenuOpen">
@@ -33,7 +37,6 @@
 
     <div class="mobile-user-row">
       <span class="username">{{ username }}</span>
-      <button class="logout-btn" (click)="logout()">Salir</button>
     </div>
   </div>
 

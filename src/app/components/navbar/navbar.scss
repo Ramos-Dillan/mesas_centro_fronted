@@ -83,18 +83,28 @@
   color: #fffdf8;
 }
 
-/* ============ BOTÓN HAMBURGUESA ============ */
+/* ============ ACCIONES MOBILE (Salir + hamburguesa) ============ */
+
+.mobile-actions {
+  display: none;
+  align-items: center;
+  gap: 14px;
+}
+
+.logout-btn-mobile {
+  padding: 7px 16px;
+  font-size: 12.5px;
+}
 
 .burger-btn {
-  display: none;
-
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 5px;
 
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
 
   border: none;
   background: transparent;
@@ -142,7 +152,7 @@
     display: none;
   }
 
-  .burger-btn {
+  .mobile-actions {
     display: flex;
   }
 
@@ -194,18 +204,11 @@
   }
 
   .mobile-user-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 24px 20px;
+    padding: 14px 24px 18px;
   }
 
   .mobile-user-row .username {
     font-size: 14px;
     color: #6b5b3e;
-  }
-
-  .mobile-user-row .logout-btn {
-    padding: 8px 18px;
   }
 }
