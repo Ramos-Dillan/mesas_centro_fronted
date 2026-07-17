@@ -5,6 +5,7 @@
 .home {
   background: #fffdf8;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* ============ TRUST BAR ============ */
@@ -108,31 +109,6 @@
   height: 1px;
   background: #e6d7b8;
   margin-top: 24px;
-}
-
-@media (max-width: 900px) {
-  .trust-bar {
-    padding: 24px 20px;
-    gap: 20px;
-  }
-
-  .trust-divider {
-    display: none;
-  }
-
-  .how-it-works {
-    padding: 50px 20px 10px;
-  }
-
-  .step-connector {
-    display: none;
-  }
-
-  .steps {
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-  }
 }
 
 /* ============ HERO ============ */
@@ -347,13 +323,16 @@
   border-top: 1px solid #ecdfc0;
 }
 
-/* ============ MOBILE ============ */
+/* ============ MOBILE (CORREGIDO) ============ */
 
 @media (max-width: 900px) {
+
   .hero {
     grid-template-columns: 1fr;
-    padding: 50px 24px;
+    grid-template-rows: auto auto;
+    padding: 40px 24px 30px;
     text-align: center;
+    gap: 24px;
   }
 
   .hero-text p {
@@ -362,17 +341,111 @@
   }
 
   .hero-text h1 {
-    font-size: 34px;
+    font-size: 30px;
+  }
+
+  .hero-emblem img {
+    width: 150px;
+    height: 150px;
+    box-shadow:
+      0 0 0 6px #fffdf8,
+      0 0 0 7px #e6d7b8,
+      0 14px 34px rgba(120, 90, 40, 0.25);
+  }
+
+  .trust-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 22px;
+    column-gap: 10px;
+    padding: 26px 20px;
+  }
+
+  .trust-divider {
+    display: none;
+  }
+
+  .trust-item {
+    min-width: 0;
+  }
+
+  .trust-item strong {
+    font-size: 19px;
+  }
+
+  .how-it-works {
+    padding: 46px 20px 10px;
+  }
+
+  .how-it-works .gallery-header h2 {
+    font-size: 26px;
+  }
+
+  .step-connector {
+    display: none;
+  }
+
+  .steps {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .step {
+    width: 100%;
+    max-width: 320px;
   }
 
   .highlight-promo,
   .upload-cta {
     padding: 40px 20px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .upload-cta {
+    margin-top: 16px;
+    margin-bottom: 50px;
+  }
+
+  .highlight-promo .gallery-header h2 {
+    font-size: 24px;
   }
 
   .promo-content {
     grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .promo-card {
+    padding: 24px 20px;
+  }
+
+  .upload-cta h2 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-text h1 {
+    font-size: 26px;
+  }
+
+  .hero-emblem img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .trust-bar {
+    grid-template-columns: 1fr 1fr;
+    padding: 20px 16px;
+  }
+
+  .trust-item strong {
+    font-size: 17px;
+  }
+
+  .trust-item span {
+    font-size: 11.5px;
   }
 }
