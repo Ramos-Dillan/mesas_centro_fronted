@@ -16,4 +16,25 @@
     <button class="logout-btn" (click)="logout()">Salir</button>
   </div>
 
+  <!-- BOTÓN HAMBURGUESA (solo mobile) -->
+  <button class="burger-btn" (click)="isMenuOpen = !isMenuOpen" [class.active]="isMenuOpen" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- MENÚ MOBILE DESPLEGABLE -->
+  <div class="mobile-menu" [class.open]="isMenuOpen">
+    <a routerLink="/home" routerLinkActive="active" (click)="isMenuOpen = false">Inicio</a>
+    <a routerLink="/mi-sala" routerLinkActive="active" (click)="isMenuOpen = false">Mi Sala</a>
+    <a routerLink="/catalogo" routerLinkActive="active" (click)="isMenuOpen = false">Catálogo</a>
+
+    <div class="mobile-menu-divider"></div>
+
+    <div class="mobile-user-row">
+      <span class="username">{{ username }}</span>
+      <button class="logout-btn" (click)="logout()">Salir</button>
+    </div>
+  </div>
+
 </nav>

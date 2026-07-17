@@ -11,6 +11,8 @@ import { AuthService } from '../../service/auth.service';
 })
 export class Navbar {
 
+  isMenuOpen = false;
+
   constructor(
     private authService: AuthService,
     private router: Router
