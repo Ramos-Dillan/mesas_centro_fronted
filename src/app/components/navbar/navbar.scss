@@ -1,16 +1,16 @@
 .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 16px 40px;
+  padding: 14px 40px;
 
   background: #fffdf8;
   border-bottom: 1px solid #ecdfc0;
-
-  position: sticky;
-  top: 0;
-  z-index: 50;
 }
 
 .nav-brand {
@@ -47,7 +47,8 @@
   transition: color 0.2s ease;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.active {
   color: #8a6a2e;
 }
 
@@ -82,12 +83,129 @@
   color: #fffdf8;
 }
 
+/* ============ BOTÓN HAMBURGUESA ============ */
+
+.burger-btn {
+  display: none;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  width: 40px;
+  height: 40px;
+
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+
+  z-index: 60;
+}
+
+.burger-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: #8a6a2e;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.burger-btn.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.burger-btn.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger-btn.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ============ MENÚ MOBILE ============ */
+
+.mobile-menu {
+  display: none;
+}
+
 @media (max-width: 760px) {
-  .nav-links {
-    display: none;
-  }
 
   .navbar {
     padding: 14px 20px;
+  }
+
+  .nav-links,
+  .nav-user {
+    display: none;
+  }
+
+  .burger-btn {
+    display: flex;
+  }
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    background: #fffdf8;
+    border-bottom: 1px solid #ecdfc0;
+    box-shadow: 0 16px 30px rgba(120, 90, 40, 0.12);
+
+    max-height: 0;
+    overflow: hidden;
+
+    transition: max-height 0.35s ease;
+  }
+
+  .mobile-menu.open {
+    max-height: 320px;
+  }
+
+  .mobile-menu a {
+    padding: 16px 24px;
+
+    color: #6b5b3e;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+
+    border-bottom: 1px solid #f2e8cd;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+
+  .mobile-menu a:hover,
+  .mobile-menu a.active {
+    color: #8a6a2e;
+    background: #faf1d9;
+  }
+
+  .mobile-menu-divider {
+    height: 1px;
+    background: #ecdfc0;
+    margin: 4px 24px;
+  }
+
+  .mobile-user-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px 20px;
+  }
+
+  .mobile-user-row .username {
+    font-size: 14px;
+    color: #6b5b3e;
+  }
+
+  .mobile-user-row .logout-btn {
+    padding: 8px 18px;
   }
 }
